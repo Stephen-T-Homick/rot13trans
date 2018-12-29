@@ -9,30 +9,25 @@ import sys
 parser = argparse.ArgumentParser()
 parser.add_argument('--asciitorot', help='Convert plain text to ROT13 cipher.', action='store_true')
 parser.add_argument('--rottoascii', help='Convert ROT13 to plain text.', action='store_true')
-#parser.add_argument("-h", "--help", action='help', help="Show this help message")
 args = parser.parse_args()
 
 #ROT13 intab and outtab representing the conversion
 intab = "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz"
 outtab = "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm"
 
-def usage():
-    print(('usage: rot13trans.py [-h] [--asciitorot] [--rottoascii]'
-    'optional arguments:'
-    '-h, --help    show this help message and exit'
-   '--asciitorot  Convert plain text to ROT13 cipher.'
-    '--rottoascii  Convert ROT13 to plain text.)').format(3,5))
 try:
+    if not len(sys.argv) > 1:
+        print("No arguments entered.")
+        sys.exit()
     if args.asciitorot:
-        str = args.asciitorot
-        trantab = str.maketrans(intab,outtab)
-        print(str.translate(trantab))
+        strput = input("[ASCII --> ROT 13 Selected]--String:> ")
+        trantab = strput.maketrans(intab,outtab)
+        print(strput.translate(trantab))
     elif args.rottoascii:
-        str = input("[ROT13 --> ASCII selected]--String:> ")
-        trantab = str.maketrans(outtab,intab)
-        print(str.translate(trantab))
+        strput = input("[ROT13 --> ASCII selected]--String:> ")
+        trantab = strput.maketrans(outtab,intab)
+        print(strput.translate(trantab))
     else:
-        print("No arguments supplied")
-        usage()
-except KeyboardInterrupt:
-    print("User exited voluntarily")
+        sys.exit()
+except KeyboardInterrupt as e:
+    print("Exiting.")
