@@ -20,9 +20,19 @@ args = parser.parse_args()
 intab = "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz"
 outtab = "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm"
 
+def usage():
+    print("""
+    usage: rot13trans.py [-h] [--asciitorot] [--rottoascii]
+
+optional arguments:
+  -h, --help    show this help message and exit
+  --asciitorot  Convert plain text to ROT13 cipher.
+  --rottoascii  Convert ROT13 to plain text.
+  """)
 try:
     if not len(sys.argv) > 1:
         print("No arguments entered.")
+        usage()
         sys.exit()
     if args.asciitorot:
         strput = input("[ASCII --> ROT 13 Selected]--String:> ")
