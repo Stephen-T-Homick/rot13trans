@@ -3,9 +3,14 @@
 import argparse
 import string
 import sys
-#
-# Set up CLI argument parsing.
-#
+### This script will accept input which will turn ASCII -> ROT13 or vice versa.
+### Command strings are accepted internally as to not pollute .bash_history with private text.
+### Usage ./rot13trans.py -h
+###
+###
+
+### Set up CLI argument parsing.
+###
 parser = argparse.ArgumentParser()
 parser.add_argument('--asciitorot', help='Convert plain text to ROT13 cipher.', action='store_true')
 parser.add_argument('--rottoascii', help='Convert ROT13 to plain text.', action='store_true')
