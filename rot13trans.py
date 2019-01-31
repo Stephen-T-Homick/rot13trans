@@ -29,20 +29,23 @@ optional arguments:
   --asciitorot  Convert plain text to ROT13 cipher.
   --rottoascii  Convert ROT13 to plain text.
   """)
-try:
-    if not len(sys.argv) > 1:
-        print("No arguments entered.")
-        usage()
+
+while True:
+    try:
+        if not len(sys.argv) > 1:
+            print("No arguments entered.")
+            usage()
+            sys.exit()
+        if args.asciitorot:
+            strput = input("[ASCII --> ROT 13 Selected]--String:> ")
+            trantab = strput.maketrans(intab,outtab)
+            print(strput.translate(trantab))
+        elif args.rottoascii:
+            strput = input("[ROT13 --> ASCII selected]--String:> ")
+            trantab = strput.maketrans(outtab,intab)
+            print(strput.translate(trantab))
+        else:
+            sys.exit()
+    except KeyboardInterrupt as e:
+        print("Exiting.")
         sys.exit()
-    if args.asciitorot:
-        strput = input("[ASCII --> ROT 13 Selected]--String:> ")
-        trantab = strput.maketrans(intab,outtab)
-        print(strput.translate(trantab))
-    elif args.rottoascii:
-        strput = input("[ROT13 --> ASCII selected]--String:> ")
-        trantab = strput.maketrans(outtab,intab)
-        print(strput.translate(trantab))
-    else:
-        sys.exit()
-except KeyboardInterrupt as e:
-    print("Exiting.")
