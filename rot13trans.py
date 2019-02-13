@@ -14,12 +14,13 @@ import sys
 parser = argparse.ArgumentParser()
 parser.add_argument('-a', '--asciitorot', help='Convert plain text to ROT13 cipher.', action='store_true')
 parser.add_argument('-r', '--rottoascii', help='Convert ROT13 to plain text.', action='store_true')
-parser.add_argument('-n', '--rotnumber', help='Convert ROT13 to plain text.', action='store_true', default='13')
+parser.add_argument('-n', '--rotnumber', help='Convert ROT13 to plain text.', action='store_true', default='13', type=int)
 args = parser.parse_args()
 
 #ROT13 intab and outtab representing the conversion
 intab = "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz"
 outtab = "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm"
+n = int(args.rotnumber)
 
 def usage():
     print("""
@@ -40,12 +41,19 @@ while True:
             sys.exit()
         if args.asciitorot:
             strput = input("[ASCII --> ROT 13 Selected]--String:> ")
-            trantab = strput.maketrans(intab,outtab)
-            print(strput.translate(trantab))
+            # trantab = strput.maketrans(intab,outtab)
+            # print(strput.translate(trantab))
             output = []
             for c in strput:
                 i = ord(c)
-                i = int(i) + int(args.rotnumber)
+                i = int(i) + n
+                # TODO: this can probably be simplified (DRY)
+                if i > 65 and i <= (90 + n):
+                    if i > 90:
+                        i = i - 26
+                if i > 97 and i <= (122 + n):
+                    if i > 122:
+                        i = i -26
                 o = (chr(i))
                 output.append(o)
             output = ''.join(output)
