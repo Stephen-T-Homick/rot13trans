@@ -44,7 +44,7 @@ Required arguments:
   """)
 
 
-n = args.rot
+rotNumber = args.rot
 # if args.rot:
 #     print("You entered %d") % (args.rot)
 while True:
@@ -57,29 +57,34 @@ while True:
             usage()
             sys.exit()
         if args.asciitorot:
-            strput = input("[ASCII --> ROT 13 Selected]--String:> ")
-            # trantab = strput.maketrans(intab,outtab)
-            # print(strput.translate(trantab))
+            stringInput = input("[ASCII --> ROT 13 Selected]--String:> ")
+            # trantab = stringInput.maketrans(intab,outtab)
+            # print(stringInput.translate(trantab))
             output = []
-            for c in strput:
-                i = ord(c)
-                i = int(i) + n
-                # TODO: this can probably be simplified (DRY)
-                if i > 65 and i <= (90 + n):
-                    if i > 90:
-                        i = i - 26
-                if i > 97 and i <= (122 + n):
-                    if i > 122:
-                        i = i - 26
-                o = (chr(i))
-                output.append(o)
+            for character in stringInput:
+                unicodeValue = ord(character)
+                # TODO: this can probably be simplified (DRY) (i.e. make a function that takes min, max, rot)
+                if unicodeValue > 64 and unicodeValue <= 90:
+                    for i in range(1, (rotNumber+1)):
+                        if unicodeValue + 1 < 91:
+                            unicodeValue += 1
+                        else:
+                            unicodeValue = 65
+                if unicodeValue > 96 and unicodeValue <= 122:
+                    for i in range(1, (rotNumber+1)):
+                        if unicodeValue + 1 < 123:
+                            unicodeValue += 1
+                        else:
+                            unicodeValue = 97
+                outputCharacter = (chr(unicodeValue))
+                output.append(outputCharacter)
             output = ''.join(output)
             # TODO: Figure out the math to make sure the add/subtract doesn't go outside the ascii codes for a-z and A-Z (97-122 and 65-90)
             print(output)
         elif args.rottoascii:
-            strput = input("[ROT13 --> ASCII selected]--String:> ")
-            trantab = strput.maketrans(outtab, intab)
-            print(strput.translate(trantab))
+            stringInput = input("[ROT13 --> ASCII selected]--String:> ")
+            trantab = stringInput.maketrans(outtab, intab)
+            print(stringInput.translate(trantab))
         else:
             print("Something else went wrong. Exiting.")
             usage()
