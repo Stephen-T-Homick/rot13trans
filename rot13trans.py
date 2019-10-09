@@ -14,20 +14,8 @@ import sys
 ###
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    '--asciitorot', help='Convert plain text to ROT13 cipher.', action='store_true')
-parser.add_argument(
-    '--rottoascii', help='Convert ROT13 to plain text.', action='store_true')
-parser.add_argument(
     '--rot', help='Which ROT translation you would like to use', type=int)
 args = parser.parse_args()
-
-# Dict experimenting with both in / out tab's based on their ROT's.
-# intab14 = "ABCDEFGHIJKLMNabcdefghijklmnOPQRSTUVWXYZABnopqrstuvwxyza"
-# outtab14 = "NOPQRSTUVWXYZAnopqrstuvwxyzaABCDEFGHIJKLMNabcdefghijklmn"
-
-# ROT13 intab and outtab representing the conversion
-# intab13 = "ABCDEFGHIJKLMabcdefghijklmNOPQRSTUVWXYZnopqrstuvwxyz"
-# outtab13 = "NOPQRSTUVWXYZnopqrstuvwxyzABCDEFGHIJKLMabcdefghijklm"
 
 
 def usage():
@@ -45,8 +33,7 @@ Required arguments:
 
 
 rotNumber = args.rot
-# if args.rot:
-#     print("You entered %d") % (args.rot)
+prompt = "ROT" + str(rotNumber) + " >"
 while True:
     try:
         if not len(sys.argv) > 1:
@@ -56,10 +43,8 @@ while True:
         if not args.rot:
             usage()
             sys.exit()
-        if args.asciitorot:
-            stringInput = input("[ASCII --> ROT 13 Selected]--String:> ")
-            # trantab = stringInput.maketrans(intab,outtab)
-            # print(stringInput.translate(trantab))
+        if args.rot:
+            stringInput = input(prompt)
             output = []
             for character in stringInput:
                 unicodeValue = ord(character)
@@ -81,10 +66,6 @@ while True:
             output = ''.join(output)
             # TODO: Figure out the math to make sure the add/subtract doesn't go outside the ascii codes for a-z and A-Z (97-122 and 65-90)
             print(output)
-        elif args.rottoascii:
-            stringInput = input("[ROT13 --> ASCII selected]--String:> ")
-            trantab = stringInput.maketrans(outtab, intab)
-            print(stringInput.translate(trantab))
         else:
             print("Something else went wrong. Exiting.")
             usage()
